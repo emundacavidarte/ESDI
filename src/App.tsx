@@ -59,7 +59,7 @@ const TODAY = new Date("2026-04-14");
 
 const MOCK_DATA = [
   { 
-    id: "1", servicio: "SAF", distrito: "SANAGORAN", usuarioDni: "94069838", nombre: "BRAYAN ALEXIS ARENAS ANTICONA", edad: "16 Meses", ingreso: "03/03/2025", unidadTerritorial: "LA LIBERTAD", ciai: "-", seguroSalud: "SUBSIDIADO (SIS GRATUITO)", establecimiento: "SANAGORAN", esdiMin: "2026-04-01", esdiMax: "2026-04-30", esdiCompletado: false, 
+    id: "1", servicio: "SAF", distrito: "SANAGORAN", usuarioDni: "94069838", nombre: "BRAYAN ALEXIS ARENAS ANTICONA", edad: "16 Meses", ingreso: "03/03/2025", unidadTerritorial: "LA LIBERTAD", ciai: "-", seguroSalud: "SUBSIDIADO (SIS GRATUITO)", establecimiento: "SANAGORAN", esdiMin: "2026-04-01", esdiMax: "2026-04-30", esdiCompletado: true, 
     socioemocional: "Esperado", cognitiva: "Proceso", comunicativa: "Esperado", motora: "Destacado", adaptativa: "Esperado",
     socioemocional_interaccion: 45, 
     cognitiva_simbolica: 30, 
@@ -71,7 +71,7 @@ const MOCK_DATA = [
     nivelLogro: "Proceso" 
   },
   { 
-    id: "2", servicio: "SCD", distrito: "TAMBO", usuarioDni: "94084613", nombre: "MARIA FERNANDA LOPEZ RUIZ", edad: "24 Meses", ingreso: "15/01/2025", unidadTerritorial: "CUSCO", ciai: "TAMBO AZUL", seguroSalud: "ESSALUD", establecimiento: "TAMBO", esdiMin: "2026-03-01", esdiMax: "2026-03-31", esdiCompletado: false, 
+    id: "2", servicio: "SCD", distrito: "TAMBO", usuarioDni: "94084613", nombre: "MARIA FERNANDA LOPEZ RUIZ", edad: "24 Meses", ingreso: "15/01/2025", unidadTerritorial: "CUSCO", ciai: "TAMBO AZUL", seguroSalud: "ESSALUD", establecimiento: "TAMBO", esdiMin: "2026-03-01", esdiMax: "2026-03-31", esdiCompletado: true, 
     socioemocional: "Proceso", cognitiva: "Proceso", comunicativa: "Proceso", motora: "Esperado", adaptativa: "Proceso",
     socioemocional_interaccion: 25, 
     cognitiva_simbolica: 35, 
@@ -167,7 +167,7 @@ const MOCK_DATA = [
     nivelLogro: "Proceso" 
   },
   { 
-    id: "10", servicio: "SAF", distrito: "OROPESA", usuarioDni: "94051701", nombre: "VALERIA SOFIA NUÑEZ", edad: "32 Meses", ingreso: "20/01/2025", unidadTerritorial: "APURIMAC", ciai: "-", seguroSalud: "SUBSIDIADO", establecimiento: "OROPESA", esdiMin: "2026-03-15", esdiMax: "2026-04-15", esdiCompletado: false, 
+    id: "10", servicio: "SAF", distrito: "OROPESA", usuarioDni: "94051701", nombre: "VALERIA SOFIA NUÑEZ", edad: "32 Meses", ingreso: "20/01/2025", unidadTerritorial: "APURIMAC", ciai: "-", seguroSalud: "SUBSIDIADO", establecimiento: "OROPESA", esdiMin: "2026-03-15", esdiMax: "2026-04-15", esdiCompletado: true, 
     socioemocional: "Destacado", cognitiva: "Destacado", comunicativa: "Esperado", motora: "Destacado", adaptativa: "Destacado",
     socioemocional_interaccion: 80, 
     cognitiva_simbolica: 85, 
@@ -179,7 +179,7 @@ const MOCK_DATA = [
     nivelLogro: "Destacado" 
   },
   { 
-    id: "11", servicio: "SCD", distrito: "CHILCA", usuarioDni: "94012345", nombre: "THIAGO SEBASTIAN ROJAS", edad: "20 Meses", ingreso: "10/01/2025", unidadTerritorial: "JUNIN", ciai: "-", seguroSalud: "SUBSIDIADO", establecimiento: "CHILCA", esdiMin: "2026-04-01", esdiMax: "2026-04-30", esdiCompletado: false, 
+    id: "11", servicio: "SCD", distrito: "CHILCA", usuarioDni: "94012345", nombre: "THIAGO SEBASTIAN ROJAS", edad: "20 Meses", ingreso: "10/01/2025", unidadTerritorial: "JUNIN", ciai: "-", seguroSalud: "SUBSIDIADO", establecimiento: "CHILCA", esdiMin: "2026-04-01", esdiMax: "2026-04-30", esdiCompletado: true, 
     socioemocional: "Esperado", cognitiva: "Proceso", comunicativa: "Esperado", motora: "Esperado", adaptativa: "Esperado",
     socioemocional_interaccion: 55, 
     cognitiva_simbolica: 45, 
@@ -193,13 +193,13 @@ const MOCK_DATA = [
 ];
 
 const getEsdiStatus = (min: string, max: string, completed: boolean) => {
-  if (completed) return { label: "Completado", color: "text-green-600", icon: CheckCircle2, bg: "bg-green-50" };
+  if (completed) return { label: "COMPLETADO", color: "text-green-600", icon: CheckCircle2, bg: "bg-green-50", rowBg: "bg-[#DCFCE7]/60" };
   const minDate = new Date(min);
   const maxDate = new Date(max);
   
-  if (TODAY > maxDate) return { label: "Vencido - Pendiente", color: "text-red-600", icon: XCircle, bg: "bg-red-50" };
-  if (TODAY >= minDate && TODAY <= maxDate) return { label: "En Rango - Pendiente", color: "text-orange-500", icon: AlertTriangle, bg: "bg-orange-50" };
-  return { label: "Próximamente", color: "text-blue-500", icon: Clock, bg: "bg-blue-50" };
+  if (TODAY > maxDate) return { label: "VENCIDO - PENDIENTE", color: "text-red-700", icon: XCircle, bg: "bg-red-50", rowBg: "bg-[#FEE2E2]/60 border-l-4 border-l-red-500" };
+  if (TODAY >= minDate && TODAY <= maxDate) return { label: "EN RANGO - PENDIENTE", color: "text-orange-500", icon: AlertTriangle, bg: "bg-orange-50", rowBg: "bg-[#FEF9C3]/50 border-l-4 border-l-orange-500" };
+  return { label: "PRÓXIMAMENTE", color: "text-blue-500", icon: Clock, bg: "bg-blue-50", rowBg: "bg-[#F1F5F9]/60" };
 };
 
 const formatDate = (dateStr: string) => {
@@ -252,14 +252,18 @@ export default function App() {
     }
   };
 
+  const getChartValue = (key: string) => {
+    return selectedUser?.esdiCompletado ? selectedUser[key] : 0;
+  };
+
   const chartData = selectedUser ? [
-    { id: 'socioemocional', name: 'Socioemocional|Interacción con otras/os', value: selectedUser.socioemocional_interaccion, full: 100, dimension: 'Socioemocional', subdimension: 'Interacción con otras/os' },
-    { id: 'cognitiva_simbolica', name: 'Cognitiva|Función simbólica', value: selectedUser.cognitiva_simbolica, full: 100, dimension: 'Cognitiva', subdimension: 'Función simbólica' },
-    { id: 'cognitiva_resolucion', name: 'Cognitiva|Resolución de problemas', value: selectedUser.cognitiva_resolucion, full: 100, dimension: 'Cognitiva', subdimension: 'Resolución de problemas' },
-    { id: 'comunicativa', name: 'Comunicativa|Comunicación preverbal y verbal', value: selectedUser.comunicativa_verbal, full: 100, dimension: 'Comunicativa', subdimension: 'Comunicación preverbal y verbal' },
-    { id: 'motora_gruesa', name: 'Motora|Motora gruesa', value: selectedUser.motora_gruesa, full: 100, dimension: 'Motora', subdimension: 'Motora gruesa' },
-    { id: 'motora_fina', name: 'Motora|Motora fina', value: selectedUser.motora_fina, full: 100, dimension: 'Motora', subdimension: 'Motora fina' },
-    { id: 'adaptativa', name: 'Adaptativa|Autonomía', value: selectedUser.adaptativa_autonomia, full: 100, dimension: 'Adaptativa', subdimension: 'Autonomía' },
+    { id: 'socioemocional', name: 'Socioemocional|Interacción con otras/os', value: getChartValue('socioemocional_interaccion'), full: 100, dimension: 'Socioemocional', subdimension: 'Interacción con otras/os' },
+    { id: 'cognitiva_simbolica', name: 'Cognitiva|Función simbólica', value: getChartValue('cognitiva_simbolica'), full: 100, dimension: 'Cognitiva', subdimension: 'Función simbólica' },
+    { id: 'cognitiva_resolucion', name: 'Cognitiva|Resolución de problemas', value: getChartValue('cognitiva_resolucion'), full: 100, dimension: 'Cognitiva', subdimension: 'Resolución de problemas' },
+    { id: 'comunicativa', name: 'Comunicativa|Comunicación preverbal y verbal', value: getChartValue('comunicativa_verbal'), full: 100, dimension: 'Comunicativa', subdimension: 'Comunicación preverbal y verbal' },
+    { id: 'motora_gruesa', name: 'Motora|Motora gruesa', value: getChartValue('motora_gruesa'), full: 100, dimension: 'Motora', subdimension: 'Motora gruesa' },
+    { id: 'motora_fina', name: 'Motora|Motora fina', value: getChartValue('motora_fina'), full: 100, dimension: 'Motora', subdimension: 'Motora fina' },
+    { id: 'adaptativa', name: 'Adaptativa|Autonomía', value: getChartValue('adaptativa_autonomia'), full: 100, dimension: 'Adaptativa', subdimension: 'Autonomía' },
   ] : [];
 
   const groupedData = selectedUser ? [
@@ -435,30 +439,20 @@ export default function App() {
             <div className="mt-8 space-y-4 text-sm font-medium text-gray-600">
               <div className="flex flex-wrap gap-6">
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-green-600 rounded"></div>
-                  <span>Completados (02)</span>
+                  <div className="w-4 h-4 bg-[#DCFCE7] border border-green-200 rounded"></div>
+                  <span>Completado</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-gray-200 rounded"></div>
-                  <span>Pendientes (06)</span>
+                  <div className="w-4 h-4 bg-[#FEF9C3] border-l-2 border-l-orange-500 border border-yellow-200 rounded"></div>
+                  <span>En Rango - Pendiente</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-red-600 rounded"></div>
-                  <span>Vencidos (02)</span>
-                </div>
-              </div>
-              <div className="flex flex-wrap gap-6">
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-[#FFC1C1] rounded"></div>
-                  <span>Logro en proceso (05)</span>
+                  <div className="w-4 h-4 bg-[#FEE2E2] border-l-2 border-l-red-500 border border-red-200 rounded"></div>
+                  <span>Vencido - Pendiente</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-[#FFF4C1] rounded"></div>
-                  <span>Logro esperado (03)</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-[#C1FFC1] rounded"></div>
-                  <span>Logro Destacado (02)</span>
+                  <div className="w-4 h-4 bg-[#F1F5F9] border border-slate-200 rounded"></div>
+                  <span>Próximamente</span>
                 </div>
               </div>
             </div>
@@ -471,7 +465,7 @@ export default function App() {
                 <TableRow className="hover:bg-transparent border-b border-white/20">
                   <TableHead colSpan={5} className="h-10"></TableHead>
                   <TableHead colSpan={5} className="text-white font-bold text-center h-10 border-x border-white/20">
-                    Dimensión
+                    Dimensión - Nivel de Logro
                   </TableHead>
                 </TableRow>
                 <TableRow className="hover:bg-transparent border-none">
@@ -496,23 +490,20 @@ export default function App() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {MOCK_DATA.map((row) => (
-                  <TableRow 
-                    key={row.id} 
-                    className={`border-b border-gray-100 hover:opacity-90 transition-opacity ${
-                      row.nivelLogro === "Proceso" ? "bg-[#FFC1C1]" : 
-                      row.nivelLogro === "Esperado" ? "bg-[#FFF4C1]" : 
-                      row.nivelLogro === "Destacado" ? "bg-[#C1FFC1]" : "bg-white"
-                    }`}
-                  >
-                    <TableCell className="font-medium">{row.servicio}</TableCell>
+                {MOCK_DATA.map((row) => {
+                  const status = getEsdiStatus(row.esdiMin, row.esdiMax, row.esdiCompletado);
+                  return (
+                    <TableRow 
+                      key={row.id} 
+                      className={`border-b border-gray-100 hover:opacity-90 transition-opacity ${status.rowBg}`}
+                    >
+                      <TableCell className="font-medium">{row.servicio}</TableCell>
                     <TableCell>
-                      <div className="flex flex-col">
-                        <span className="font-bold text-gray-700">{row.distrito}</span>
-                        <span className="text-[10px] text-gray-500 italic">
-                          {row.servicio === "SCD" && (row.ciai === "-" || !row.ciai) ? "CIAI Los Girasoles" : (row.ciai !== "-" ? row.ciai : "")}
-                        </span>
-                      </div>
+                      <span className="font-bold text-gray-700 uppercase">
+                        {row.servicio === "SCD" 
+                          ? (row.ciai !== "-" && row.ciai ? row.ciai : "CIAI LOS GIRASOLES")
+                          : row.distrito}
+                      </span>
                     </TableCell>
                     <TableCell 
                       className="text-blue-600 font-bold underline cursor-pointer"
@@ -533,24 +524,29 @@ export default function App() {
                       </Tooltip>
                     </TableCell>
                     <TableCell>
-                      {(() => {
-                        const status = getEsdiStatus(row.esdiMin, row.esdiMax, row.esdiCompletado);
-                        const Icon = status.icon;
-                        return (
-                          <div className={`flex items-center gap-1.5 px-2 py-1 rounded-full w-fit ${status.bg} ${status.color}`}>
-                            <Icon className="w-3.5 h-3.5" />
-                            <span className="text-[10px] font-bold uppercase tracking-tight">{status.label}</span>
-                          </div>
-                        );
-                      })()}
+                      <div className={`flex items-center gap-1.5 px-2 py-1 rounded-full w-fit ${status.bg} ${status.color}`}>
+                        <status.icon className="w-3.5 h-3.5" />
+                        <span className="text-[10px] font-bold uppercase tracking-tight">{status.label}</span>
+                      </div>
                     </TableCell>
-                    <TableCell>{row.socioemocional}</TableCell>
-                    <TableCell>{row.cognitiva}</TableCell>
-                    <TableCell>{row.comunicativa}</TableCell>
-                    <TableCell>{row.motora}</TableCell>
-                    <TableCell>{row.adaptativa}</TableCell>
+                    <TableCell>
+                      {!row.esdiCompletado ? <span className="text-gray-400 font-medium">-</span> : row.socioemocional}
+                    </TableCell>
+                    <TableCell>
+                      {!row.esdiCompletado ? <span className="text-gray-400 font-medium">-</span> : row.cognitiva}
+                    </TableCell>
+                    <TableCell>
+                      {!row.esdiCompletado ? <span className="text-gray-400 font-medium">-</span> : row.comunicativa}
+                    </TableCell>
+                    <TableCell>
+                      {!row.esdiCompletado ? <span className="text-gray-400 font-medium">-</span> : row.motora}
+                    </TableCell>
+                    <TableCell>
+                      {!row.esdiCompletado ? <span className="text-gray-400 font-medium">-</span> : row.adaptativa}
+                    </TableCell>
                   </TableRow>
-                ))}
+                  );
+                })}
               </TableBody>
             </Table>
             
@@ -642,7 +638,7 @@ export default function App() {
                     <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
                       <Activity className="w-5 h-5 text-[#0099FF]" />
                     </div>
-                    ESDI de Ingreso
+                    ESDI INGRESO
                   </h4>
                   <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100 border-none font-bold">02/10/2025</Badge>
                 </div>
@@ -684,7 +680,9 @@ export default function App() {
                         content={({ active, payload }) => {
                           if (active && payload && payload.length) {
                             const data = payload[0].payload;
-                            const level = getBaremoLevel(data.value);
+                            const hasData = selectedUser?.esdiCompletado;
+                            const level = hasData ? getBaremoLevel(data.value) : "Sin registro";
+                            const color = hasData ? getBaremoColor(data.value) : "#94A3B8";
                             return (
                               <div className="bg-white p-3 border border-gray-100 shadow-xl rounded-lg">
                                 <p className="text-[10px] font-bold text-gray-400 uppercase mb-0.5">{data.dimension}</p>
@@ -692,11 +690,11 @@ export default function App() {
                                 <div className="flex flex-col gap-1 mt-2">
                                   <div className="flex justify-between items-center text-[10px]">
                                     <span className="text-gray-500 font-medium">Nivel de Logro:</span>
-                                    <span className="font-bold" style={{ color: getBaremoColor(data.value) }}>{level}</span>
+                                    <span className="font-bold" style={{ color }}>{level}</span>
                                   </div>
                                   <div className="flex justify-between items-center text-[10px]">
                                     <span className="text-gray-500 font-medium">Ptje. Convertido:</span>
-                                    <span className="font-bold text-gray-700">{data.value}</span>
+                                    <span className="font-bold text-gray-500">{hasData ? data.value : "-"}</span>
                                   </div>
                                 </div>
                               </div>
@@ -716,48 +714,90 @@ export default function App() {
                   </ResponsiveContainer>
                   </div>
                 </div>
+              </section>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                  {groupedData.map((group) => (
-                    <div key={group.dimension} className="bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col shadow-sm">
-                      <div className="bg-gray-50 py-2 px-3 border-b border-gray-100">
-                        <h5 className="text-[10px] font-black text-gray-500 uppercase tracking-wider text-center">{group.dimension}</h5>
-                      </div>
-                      <div className="p-3 flex flex-col gap-3 flex-1 bg-gray-50/30">
-                        {group.items.map((item: any, idx: number) => {
-                          const level = getBaremoLevel(item.value);
-                          const color = getBaremoColor(item.value);
+              <section className="space-y-6 pt-6 border-t border-gray-100">
+                <div className="flex items-center justify-between">
+                  <h4 className="font-bold text-gray-800 text-lg flex items-center gap-2.5">
+                    <div className="w-8 h-8 bg-purple-50 rounded-lg flex items-center justify-center">
+                      <Activity className="w-5 h-5 text-[#7D3C98]" />
+                    </div>
+                    ESDI EGRESO
+                  </h4>
+                  <Badge className="bg-gray-100 text-gray-500 hover:bg-gray-100 border-none font-bold">Próximamente</Badge>
+                </div>
+                
+                <div className="h-[400px] w-full bg-[#F8FAFC] rounded-3xl p-4 sm:p-6 border border-gray-100 shadow-inner flex items-center justify-center overflow-hidden">
+                  <div className="w-[95%] max-w-[95%] h-full mx-auto flex items-center justify-center" style={{ objectFit: 'contain' }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart layout="vertical" data={chartData} margin={{ top: 20, right: 20, left: 180, bottom: 20 }}>
+                      <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={true} stroke="#e2e8f0" />
+                      <XAxis 
+                        type="number"
+                        domain={[0, 100]} 
+                        ticks={[0, 25, 50, 60, 75, 100]} 
+                        tick={{ fill: '#64748b', fontSize: 10 }} 
+                      />
+                      <YAxis 
+                        dataKey="name" 
+                        type="category"
+                        tick={(props: any) => {
+                          const { x, y, payload } = props;
+                          const [dimension, subdimension] = payload.value.split('|');
                           return (
-                            <div key={idx} className="bg-white rounded-xl p-3 border border-gray-100 shadow-sm relative overflow-hidden flex flex-col justify-between flex-1">
-                              <div className="absolute top-0 left-0 w-1 h-full" style={{ backgroundColor: color }}></div>
-                              <div className="flex justify-between items-start mb-2">
-                                <p className="text-[11px] font-bold text-gray-800 leading-tight pr-4">{item.subdimension}</p>
-                                <div className="w-2 h-2 rounded-full shrink-0 mt-0.5" style={{ backgroundColor: color }}></div>
-                              </div>
-                              <div className="space-y-1.5 mt-3">
-                                <div className="space-y-1 mt-2 border-t border-gray-50 pt-2">
+                            <g transform={`translate(${x},${y})`}>
+                              <text x={-10} y={-4} dy={0} textAnchor="end" fill="#64748b" fontSize={10} fontWeight={500}>
+                                {dimension}
+                              </text>
+                              <text x={-10} y={10} dy={0} textAnchor="end" fill="#334155" fontSize={11} fontWeight={700}>
+                                {subdimension}
+                              </text>
+                            </g>
+                          );
+                        }}
+                        width={200}
+                        axisLine={false}
+                        tickLine={false}
+                      />
+                      <RechartsTooltip 
+                        cursor={{ fill: 'rgba(125, 60, 152, 0.05)' }}
+                        content={({ active, payload }) => {
+                          if (active && payload && payload.length) {
+                            const data = payload[0].payload;
+                            // For EGRESO, simulating empty/pending right now, or reflecting same data logic if we want.
+                            // The user says "Genera un grafico similar", let's use the exact identical behavior minus the hasData condition. Let's assume it has no data until EGRESO is integrated. But for now we just show it empty like incomplete ESDI or matching the user state.
+                            const level = "Sin registro"; 
+                            const color = "#94A3B8";
+                            return (
+                              <div className="bg-white p-3 border border-gray-100 shadow-xl rounded-lg">
+                                <p className="text-[10px] font-bold text-gray-400 uppercase mb-0.5">{data.dimension}</p>
+                                <p className="text-xs font-black text-gray-900 mb-2">{data.subdimension}</p>
+                                <div className="flex flex-col gap-1 mt-2">
                                   <div className="flex justify-between items-center text-[10px]">
                                     <span className="text-gray-500 font-medium">Nivel de Logro:</span>
                                     <span className="font-bold" style={{ color }}>{level}</span>
                                   </div>
                                   <div className="flex justify-between items-center text-[10px]">
                                     <span className="text-gray-500 font-medium">Ptje. Convertido:</span>
-                                    <span className="font-bold text-gray-700">{item.value}</span>
-                                  </div>
-                                  <div className="flex justify-between items-center text-[10px]">
-                                    <span className="text-gray-500 font-medium">Baremo:</span>
-                                    <span className="font-bold text-gray-700">
-                                      {item.value > 60 ? '> 60' : item.value >= 50 ? '50 - 60' : '< 50'}
-                                    </span>
+                                    <span className="font-bold text-gray-500">-</span>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ))}
+                            );
+                          }
+                          return null;
+                        }}
+                      />
+                      <ReferenceLine x={50} stroke="#FBBF24" strokeDasharray="3 3" label={{ position: 'insideTopRight', value: 'Esperado (50)', fill: '#FBBF24', fontSize: 10, fontWeight: 'bold' }} />
+                      <ReferenceLine x={60} stroke="#3B82F6" strokeDasharray="3 3" label={{ position: 'insideTopRight', value: 'Destacado (60)', fill: '#3B82F6', fontSize: 10, fontWeight: 'bold' }} />
+                      <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={24}>
+                        {chartData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill="#E2E8F0" />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                  </div>
                 </div>
               </section>
 
