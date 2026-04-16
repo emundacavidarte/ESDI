@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Download, Filter, ChevronRight, ChevronLeft, MoreHorizontal, AlertTriangle, XCircle, CheckCircle2, Clock, Info, User, Calendar, MapPin, Home, Shield, Hospital, ChevronDown, Activity, Syringe, ClipboardCheck, Lightbulb, Star, Baby } from "lucide-react";
+import { Search, Download, Filter, ChevronRight, ChevronLeft, MoreHorizontal, AlertTriangle, XCircle, CheckCircle2, Clock, Info, User, Calendar, MapPin, Home, Shield, Hospital, ChevronDown, Activity, Syringe, ClipboardCheck, Lightbulb, Star, Baby, BarChart2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -198,7 +198,7 @@ const getEsdiStatus = (min: string, max: string, completed: boolean) => {
   const maxDate = new Date(max);
   
   if (TODAY > maxDate) return { label: "VENCIDO - PENDIENTE", color: "text-red-700", icon: XCircle, bg: "bg-red-50", rowBg: "bg-[#FEE2E2]/60 border-l-4 border-l-red-500" };
-  if (TODAY >= minDate && TODAY <= maxDate) return { label: "EN RANGO - PENDIENTE", color: "text-orange-500", icon: AlertTriangle, bg: "bg-orange-50", rowBg: "bg-[#FEF9C3]/50 border-l-4 border-l-orange-500" };
+  if (TODAY >= minDate && TODAY <= maxDate) return { label: "EN RANGO - PENDIENTE", color: "text-amber-500", icon: AlertTriangle, bg: "bg-amber-50", rowBg: "bg-[#FEF9C3]/50 border-l-4 border-l-[#FACC15]" };
   return { label: "PRÓXIMAMENTE", color: "text-blue-500", icon: Clock, bg: "bg-blue-50", rowBg: "bg-[#F1F5F9]/60" };
 };
 
@@ -210,6 +210,12 @@ const formatDate = (dateStr: string) => {
 export default function App() {
   const [selectedUser, setSelectedUser] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+
+  const completadoCount = MOCK_DATA.filter(r => r.esdiCompletado).length;
+  const pendientesRangoCount = MOCK_DATA.filter(r => !r.esdiCompletado && TODAY >= new Date(r.esdiMin) && TODAY <= new Date(r.esdiMax)).length;
+  const vencidosCount = MOCK_DATA.filter(r => !r.esdiCompletado && TODAY > new Date(r.esdiMax)).length;
+  const proximamenteCount = MOCK_DATA.filter(r => !r.esdiCompletado && TODAY < new Date(r.esdiMin)).length;
 
   const handleUserClick = (user: any) => {
     setSelectedUser(user);
@@ -420,7 +426,10 @@ export default function App() {
             </div>
 
             <div className="flex flex-wrap items-center justify-between gap-4 mt-8">
-              <Button className="bg-[#0099FF] text-white hover:bg-[#0088EE] rounded-full px-8 h-9 font-bold text-xs shadow-md transition-all hover:shadow-lg">
+              <Button 
+                onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+                className="bg-[#0099FF] text-white hover:bg-[#0088EE] rounded-full px-8 h-9 font-bold text-xs shadow-md transition-all hover:shadow-lg"
+              >
                 Filtros avanzados
               </Button>
               <div className="flex items-center gap-2 flex-1 justify-end max-w-4xl">
@@ -435,24 +444,47 @@ export default function App() {
               </div>
             </div>
 
+            {/* Advanced Filters */}
+            {showAdvancedFilters && (
+              <div className="mt-4 flex flex-wrap gap-4 items-center">
+                <Select>
+                  <SelectTrigger className="w-[180px] border-slate-300 text-slate-700 rounded-[20px] h-9 px-4 shadow-none font-medium">
+                    <SelectValue placeholder="Estado ESDI" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="completado">Completado</SelectItem>
+                    <SelectItem value="rango-pendiente">En Rango - Pendiente</SelectItem>
+                    <SelectItem value="vencido">Vencido</SelectItem>
+                    <SelectItem value="proximamente">Próximamente</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button variant="outline" className="border-[#0099FF] text-[#0099FF] rounded-[20px] h-9 px-6 font-medium shadow-none hover:bg-blue-50">
+                  Usuario Nuevo
+                </Button>
+                <Button variant="outline" className="border-[#0099FF] text-[#0099FF] rounded-[20px] h-9 px-6 font-medium shadow-none hover:bg-blue-50">
+                  Discapacidad
+                </Button>
+              </div>
+            )}
+
             {/* Legend */}
             <div className="mt-8 space-y-4 text-sm font-medium text-gray-600">
               <div className="flex flex-wrap gap-6">
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-[#DCFCE7] border border-green-200 rounded"></div>
-                  <span>Completado</span>
+                  <div className="w-4 h-4 bg-green-500 rounded"></div>
+                  <span>Completado ({completadoCount})</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-[#FEF9C3] border-l-2 border-l-orange-500 border border-yellow-200 rounded"></div>
-                  <span>En Rango - Pendiente</span>
+                  <div className="w-4 h-4 bg-[#FACC15] rounded"></div>
+                  <span>En Rango - Pendiente ({pendientesRangoCount})</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-[#FEE2E2] border-l-2 border-l-red-500 border border-red-200 rounded"></div>
-                  <span>Vencido - Pendiente</span>
+                  <div className="w-4 h-4 bg-red-600 rounded"></div>
+                  <span>Vencido - Pendiente ({vencidosCount})</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-[#F1F5F9] border border-slate-200 rounded"></div>
-                  <span>Próximamente</span>
+                  <div className="w-4 h-4 bg-slate-300 rounded"></div>
+                  <span>Próximamente ({proximamenteCount})</span>
                 </div>
               </div>
             </div>
