@@ -277,36 +277,36 @@ export default function App() {
       <main className="max-w-[1600px] mx-auto p-6 space-y-6">
         {/* Main Content Area */}
         <div className="space-y-6">
-          <Card id="filter-card" className="p-6 border-none shadow-sm bg-white rounded-xl">
-            <div className="flex items-center justify-between mb-6">
+          <Card id="filter-card" className="p-4 border-none shadow-sm bg-white rounded-xl">
+            <div className="flex items-center justify-between mb-4">
               <h2 id="module-title" className="text-xl font-bold text-[#0099FF]">
                 Modulo: <span className="text-[#FFD700]">ESDI - Desarrollo Infantil</span>
               </h2>
-              <Button id="download-btn" className="bg-[#BADA55] hover:bg-[#A9C944] text-[#333] font-bold rounded-lg px-6">
+              <Button id="download-btn" className="bg-[#BADA55] hover:bg-[#A9C944] text-[#333] font-bold rounded-lg px-6 h-9 text-sm">
                 <Download className="w-4 h-4 mr-2" />
                 Descargar
               </Button>
             </div>
 
             {/* Filters Grid */}
-            <div id="filters-grid" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-x-5 gap-y-4 mb-8">
-              <div className="space-y-1.5 min-w-0">
-                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider truncate block">Servicio</label>
+            <div id="filters-grid" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2 mb-6 w-full">
+              <div className="space-y-1">
+                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block px-1">Servicio</label>
                 <Select defaultValue="Todos">
-                  <SelectTrigger id="select-servicio" className="bg-white border-gray-200 text-[12px] h-9 px-2 capitalize">
-                    <SelectValue placeholder="Todos los servicios" />
+                  <SelectTrigger id="select-servicio" className="bg-white border-gray-200 text-[11px] h-9 px-3 rounded-xl focus:ring-blue-500 shadow-none w-full">
+                    <SelectValue placeholder="Todos" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Todos">Todos los servicios</SelectItem>
+                    <SelectItem value="Todos">Todos</SelectItem>
                     <SelectItem value="Saf">SAF</SelectItem>
                     <SelectItem value="Scd">SCD</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-1.5 min-w-0">
-                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider truncate block">Departamento</label>
+              <div className="space-y-1">
+                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block px-1">Departamento</label>
                 <Select>
-                  <SelectTrigger className="bg-white border-gray-200 text-[12px] h-9 px-2 capitalize">
+                  <SelectTrigger className="bg-white border-gray-200 text-[11px] h-9 px-3 rounded-xl focus:ring-blue-500 shadow-none w-full">
                     <SelectValue placeholder="Seleccione Departame" />
                   </SelectTrigger>
                   <SelectContent>
@@ -318,10 +318,10 @@ export default function App() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-1.5 min-w-0">
-                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider truncate block">UT/OCT</label>
+              <div className="space-y-1">
+                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block px-1">UT/OCT</label>
                 <Select>
-                  <SelectTrigger className="bg-white border-gray-200 text-[12px] h-9 px-2 capitalize">
+                  <SelectTrigger className="bg-white border-gray-200 text-[11px] h-9 px-3 rounded-xl focus:ring-blue-500 shadow-none w-full">
                     <SelectValue placeholder="Seleccione UT" />
                   </SelectTrigger>
                   <SelectContent>
@@ -333,10 +333,10 @@ export default function App() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-1.5 min-w-0">
-                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider truncate block">Provincia</label>
+              <div className="space-y-1">
+                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block px-1">Provincia</label>
                 <Select>
-                  <SelectTrigger className="bg-white border-gray-200 text-[12px] h-9 px-2 capitalize">
+                  <SelectTrigger className="bg-white border-gray-200 text-[11px] h-9 px-3 rounded-xl focus:ring-blue-500 shadow-none w-full">
                     <SelectValue placeholder="Seleccione Provincia" />
                   </SelectTrigger>
                   <SelectContent>
@@ -348,10 +348,10 @@ export default function App() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-1.5 min-w-0">
-                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider truncate block">Distrito</label>
+              <div className="space-y-1">
+                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block px-1">Distrito</label>
                 <Select>
-                  <SelectTrigger className="bg-white border-gray-200 text-[12px] h-9 px-2 capitalize">
+                  <SelectTrigger className="bg-white border-gray-200 text-[11px] h-9 px-3 rounded-xl focus:ring-blue-500 shadow-none w-full">
                     <SelectValue placeholder="Seleccione Distrito" />
                   </SelectTrigger>
                   <SelectContent>
@@ -363,10 +363,10 @@ export default function App() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-1.5 min-w-0">
-                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider truncate block">C de Gestión</label>
+              <div className="space-y-1">
+                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block px-1">C de Gestión</label>
                 <Select>
-                  <SelectTrigger className="bg-white border-gray-200 text-[12px] h-9 px-2 capitalize">
+                  <SelectTrigger className="bg-white border-gray-200 text-[11px] h-9 px-3 rounded-xl focus:ring-blue-500 shadow-none w-full">
                     <SelectValue placeholder="Seleccione Comité" />
                   </SelectTrigger>
                   <SelectContent>
@@ -376,10 +376,10 @@ export default function App() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-1.5 min-w-0">
-                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider truncate block">C de Poblado</label>
+              <div className="space-y-1">
+                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block px-1">C de Poblado</label>
                 <Select>
-                  <SelectTrigger className="bg-white border-gray-200 text-[12px] h-9 px-2 capitalize">
+                  <SelectTrigger className="bg-white border-gray-200 text-[11px] h-9 px-3 rounded-xl focus:ring-blue-500 shadow-none w-full">
                     <SelectValue placeholder="Seleccione Centro" />
                   </SelectTrigger>
                   <SelectContent>
@@ -389,10 +389,10 @@ export default function App() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-1.5 min-w-0">
-                <label className="text-[11px] font-bold text-gray-500 uppercase tracking-wider truncate block">CIAI</label>
+              <div className="space-y-1">
+                <label className="text-[9px] font-bold text-slate-400 uppercase tracking-wider block px-1">CIAI</label>
                 <Select>
-                  <SelectTrigger className="bg-white border-gray-200 text-[12px] h-9 px-2 capitalize">
+                  <SelectTrigger className="bg-white border-gray-200 text-[11px] h-9 px-3 rounded-xl focus:ring-blue-500 shadow-none w-full">
                     <SelectValue placeholder="Seleccione CIAI" />
                   </SelectTrigger>
                   <SelectContent>
@@ -403,19 +403,19 @@ export default function App() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <Button variant="outline" className="bg-[#0099FF] text-white border-none hover:bg-[#0088EE] rounded-full px-6">
+            <div className="flex flex-wrap items-center justify-between gap-4 mt-8">
+              <Button className="bg-[#0099FF] text-white hover:bg-[#0088EE] rounded-full px-8 h-9 font-bold text-xs shadow-md transition-all hover:shadow-lg">
                 Filtros avanzados
               </Button>
-              <div className="flex items-center gap-2 flex-1 max-w-md">
-                <Input placeholder="Buscar DNI..." className="rounded-full border-gray-300" />
-                <Button className="bg-[#0099FF] hover:bg-[#0088EE] rounded-full px-6">
-                  <Search className="w-4 h-4 mr-2" />
+              <div className="flex items-center gap-2 flex-1 justify-end max-w-4xl">
+                <Input placeholder="Buscar DNI..." className="rounded-xl border-gray-200 h-9 text-xs px-4 focus-visible:ring-blue-500 w-full max-w-md shadow-sm" />
+                <Button className="bg-[#0099FF] hover:bg-[#0088EE] rounded-full px-8 h-9 font-bold text-xs shadow-md transition-all hover:shadow-lg">
+                  <Search className="w-4 h-4 mr-2 stroke-[3px]" />
                   Buscar
                 </Button>
-                <Button variant="outline" className="rounded-full px-6 border-gray-300">
+                <button className="text-slate-500 hover:text-[#0099FF] font-bold text-xs px-4 transition-colors">
                   Limpiar
-                </Button>
+                </button>
               </div>
             </div>
 
