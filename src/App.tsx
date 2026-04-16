@@ -678,9 +678,9 @@ export default function App() {
                 </div>
                 
                 <div className="h-[400px] w-full bg-[#F8FAFC] rounded-3xl p-4 sm:p-6 border border-gray-100 shadow-inner flex items-center justify-center overflow-hidden">
-                  <div className="w-[95%] max-w-[95%] h-full mx-auto flex items-center justify-center" style={{ objectFit: 'contain' }}>
+                  <div className="w-full h-full flex items-center justify-center">
                     <ResponsiveContainer width="100%" height="100%">
-                      <BarChart layout="vertical" data={chartData} margin={{ top: 20, right: 20, left: 180, bottom: 20 }}>
+                      <BarChart layout="vertical" data={chartData} margin={{ top: 20, right: 80, left: 140, bottom: 20 }}>
                       <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={true} stroke="#e2e8f0" />
                       <XAxis 
                         type="number"
@@ -762,9 +762,9 @@ export default function App() {
                 </div>
                 
                 <div className="h-[400px] w-full bg-[#F8FAFC] rounded-3xl p-4 sm:p-6 border border-gray-100 shadow-inner flex items-center justify-center overflow-hidden">
-                  <div className="w-[95%] max-w-[95%] h-full mx-auto flex items-center justify-center" style={{ objectFit: 'contain' }}>
+                  <div className="w-full h-full flex items-center justify-center">
                     <ResponsiveContainer width="100%" height="100%">
-                      <BarChart layout="vertical" data={chartData} margin={{ top: 20, right: 20, left: 180, bottom: 20 }}>
+                      <BarChart layout="vertical" data={chartData} margin={{ top: 20, right: 80, left: 140, bottom: 20 }}>
                       <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={true} stroke="#e2e8f0" />
                       <XAxis 
                         type="number"
