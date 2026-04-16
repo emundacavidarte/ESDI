@@ -480,7 +480,7 @@ export default function App() {
                       Usuario <ChevronRight className="w-4 h-4" />
                     </div>
                   </TableHead>
-                  <TableHead className="text-white font-bold h-12">ESDI Máx.</TableHead>
+                  <TableHead className="text-white font-bold h-12">Fecha ESDI</TableHead>
                   <TableHead className="text-white font-bold h-12">Estado ESDI</TableHead>
                   <TableHead className="text-white font-bold h-12">Socioemocional</TableHead>
                   <TableHead className="text-white font-bold h-12">Cognitiva</TableHead>
@@ -640,7 +640,9 @@ export default function App() {
                     </div>
                     ESDI INGRESO
                   </h4>
-                  <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100 border-none font-bold">02/10/2025</Badge>
+                  <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100 border-none font-bold">
+                    {selectedUser?.esdiMax ? formatDate(selectedUser.esdiMax) : "No disponible"}
+                  </Badge>
                 </div>
                 
                 <div className="h-[400px] w-full bg-[#F8FAFC] rounded-3xl p-4 sm:p-6 border border-gray-100 shadow-inner flex items-center justify-center overflow-hidden">
