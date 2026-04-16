@@ -689,11 +689,15 @@ export default function App() {
                               <div className="bg-white p-3 border border-gray-100 shadow-xl rounded-lg">
                                 <p className="text-[10px] font-bold text-gray-400 uppercase mb-0.5">{data.dimension}</p>
                                 <p className="text-xs font-black text-gray-900 mb-2">{data.subdimension}</p>
-                                <div className="flex items-center justify-between gap-4">
-                                  <span className="text-[11px] font-bold" style={{ color: getBaremoColor(data.value) }}>
-                                    Logro: {level}
-                                  </span>
-                                  <span className="text-[10px] text-gray-500 font-medium">{data.value}%</span>
+                                <div className="flex flex-col gap-1 mt-2">
+                                  <div className="flex justify-between items-center text-[10px]">
+                                    <span className="text-gray-500 font-medium">Nivel de Logro:</span>
+                                    <span className="font-bold" style={{ color: getBaremoColor(data.value) }}>{level}</span>
+                                  </div>
+                                  <div className="flex justify-between items-center text-[10px]">
+                                    <span className="text-gray-500 font-medium">Ptje. Convertido:</span>
+                                    <span className="font-bold text-gray-700">{data.value}</span>
+                                  </div>
                                 </div>
                               </div>
                             );
@@ -731,19 +735,21 @@ export default function App() {
                                 <div className="w-2 h-2 rounded-full shrink-0 mt-0.5" style={{ backgroundColor: color }}></div>
                               </div>
                               <div className="space-y-1.5 mt-3">
-                                <div className="flex justify-between items-center text-[10px]">
-                                  <span className="text-gray-500 font-medium">Logro:</span>
-                                  <span className="font-bold" style={{ color }}>{level}</span>
-                                </div>
-                                <div className="flex justify-between items-center text-[10px]">
-                                  <span className="text-gray-500 font-medium">Puntaje:</span>
-                                  <span className="font-bold text-gray-700">{item.value}%</span>
-                                </div>
-                                <div className="flex justify-between items-center text-[10px]">
-                                  <span className="text-gray-500 font-medium">Baremo:</span>
-                                  <span className="font-bold text-gray-700">
-                                    {item.value > 60 ? '>60' : item.value >= 50 ? '50-60' : '<50'}
-                                  </span>
+                                <div className="space-y-1 mt-2 border-t border-gray-50 pt-2">
+                                  <div className="flex justify-between items-center text-[10px]">
+                                    <span className="text-gray-500 font-medium">Nivel de Logro:</span>
+                                    <span className="font-bold" style={{ color }}>{level}</span>
+                                  </div>
+                                  <div className="flex justify-between items-center text-[10px]">
+                                    <span className="text-gray-500 font-medium">Ptje. Convertido:</span>
+                                    <span className="font-bold text-gray-700">{item.value}</span>
+                                  </div>
+                                  <div className="flex justify-between items-center text-[10px]">
+                                    <span className="text-gray-500 font-medium">Baremo:</span>
+                                    <span className="font-bold text-gray-700">
+                                      {item.value > 60 ? '> 60' : item.value >= 50 ? '50 - 60' : '< 50'}
+                                    </span>
+                                  </div>
                                 </div>
                               </div>
                             </div>
