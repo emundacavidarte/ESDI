@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Download, Filter, ChevronRight, ChevronLeft, MoreHorizontal, AlertTriangle, XCircle, CheckCircle2, Clock, Info, User, Calendar, MapPin, Home, Shield, Hospital, ChevronDown, Activity, Syringe, ClipboardCheck, Lightbulb, Star } from "lucide-react";
+import { Search, Download, Filter, ChevronRight, ChevronLeft, MoreHorizontal, AlertTriangle, XCircle, CheckCircle2, Clock, Info, User, Calendar, MapPin, Home, Shield, Hospital, ChevronDown, Activity, Syringe, ClipboardCheck, Lightbulb, Star, Baby } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -178,6 +178,18 @@ const MOCK_DATA = [
     adaptativa_autonomia: 80, 
     nivelLogro: "Destacado" 
   },
+  { 
+    id: "11", servicio: "SCD", distrito: "CHILCA", usuarioDni: "94012345", nombre: "THIAGO SEBASTIAN ROJAS", edad: "20 Meses", ingreso: "10/01/2025", unidadTerritorial: "JUNIN", ciai: "-", seguroSalud: "SUBSIDIADO", establecimiento: "CHILCA", esdiMin: "2026-04-01", esdiMax: "2026-04-30", esdiCompletado: false, 
+    socioemocional: "Esperado", cognitiva: "Proceso", comunicativa: "Esperado", motora: "Esperado", adaptativa: "Esperado",
+    socioemocional_interaccion: 55, 
+    cognitiva_simbolica: 45, 
+    cognitiva_resolucion: 48, 
+    comunicativa_verbal: 52, 
+    motora_gruesa: 60, 
+    motora_fina: 55, 
+    adaptativa_autonomia: 50, 
+    nivelLogro: "Proceso" 
+  },
 ];
 
 const getEsdiStatus = (min: string, max: string, completed: boolean) => {
@@ -241,13 +253,13 @@ export default function App() {
   };
 
   const chartData = selectedUser ? [
-    { name: 'Interacción', value: selectedUser.socioemocional_interaccion, full: 100 },
-    { name: 'F. Simbólica', value: selectedUser.cognitiva_simbolica, full: 100 },
-    { name: 'Resolución P.', value: selectedUser.cognitiva_resolucion, full: 100 },
-    { name: 'Comunicación', value: selectedUser.comunicativa_verbal, full: 100 },
-    { name: 'Motora Gruesa', value: selectedUser.motora_gruesa, full: 100 },
-    { name: 'Motora Fina', value: selectedUser.motora_fina, full: 100 },
-    { name: 'Autonomía', value: selectedUser.adaptativa_autonomia, full: 100 },
+    { id: 'socioemocional', name: 'Socioemocional|Interacción con otras/os', value: selectedUser.socioemocional_interaccion, full: 100, dimension: 'Socioemocional', subdimension: 'Interacción con otras/os' },
+    { id: 'cognitiva_simbolica', name: 'Cognitiva|Función simbólica', value: selectedUser.cognitiva_simbolica, full: 100, dimension: 'Cognitiva', subdimension: 'Función simbólica' },
+    { id: 'cognitiva_resolucion', name: 'Cognitiva|Resolución de problemas', value: selectedUser.cognitiva_resolucion, full: 100, dimension: 'Cognitiva', subdimension: 'Resolución de problemas' },
+    { id: 'comunicativa', name: 'Comunicativa|Comunicación preverbal y verbal', value: selectedUser.comunicativa_verbal, full: 100, dimension: 'Comunicativa', subdimension: 'Comunicación preverbal y verbal' },
+    { id: 'motora_gruesa', name: 'Motora|Motora gruesa', value: selectedUser.motora_gruesa, full: 100, dimension: 'Motora', subdimension: 'Motora gruesa' },
+    { id: 'motora_fina', name: 'Motora|Motora fina', value: selectedUser.motora_fina, full: 100, dimension: 'Motora', subdimension: 'Motora fina' },
+    { id: 'adaptativa', name: 'Adaptativa|Autonomía', value: selectedUser.adaptativa_autonomia, full: 100, dimension: 'Adaptativa', subdimension: 'Autonomía' },
   ] : [];
 
   const groupedData = selectedUser ? [
@@ -494,7 +506,14 @@ export default function App() {
                     }`}
                   >
                     <TableCell className="font-medium">{row.servicio}</TableCell>
-                    <TableCell>{row.distrito}</TableCell>
+                    <TableCell>
+                      <div className="flex flex-col">
+                        <span className="font-bold text-gray-700">{row.distrito}</span>
+                        <span className="text-[10px] text-gray-500 italic">
+                          {row.servicio === "SCD" && (row.ciai === "-" || !row.ciai) ? "CIAI Los Girasoles" : (row.ciai !== "-" ? row.ciai : "")}
+                        </span>
+                      </div>
+                    </TableCell>
                     <TableCell 
                       className="text-blue-600 font-bold underline cursor-pointer"
                       onClick={() => handleUserClick(row)}
@@ -567,60 +586,50 @@ export default function App() {
       {/* User Detail Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="w-full lg:max-w-6xl h-[90vh] p-0 border border-gray-200 rounded-xl overflow-hidden bg-white shadow-2xl flex flex-col">
-          <DialogHeader className="p-4 lg:p-6 bg-[#0099FF] text-white flex-row items-center justify-between shrink-0 border-b border-white/10">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center hidden sm:flex">
-                <User className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <DialogTitle className="text-lg lg:text-xl font-bold">Expediente Digital del Usuario</DialogTitle>
-                <p className="text-[10px] lg:text-xs text-white/80 font-medium">Información detallada y seguimiento integral del desarrollo infantil</p>
-              </div>
-            </div>
-          </DialogHeader>
-          
+          <DialogTitle className="sr-only">Expediente Digital del Usuario</DialogTitle>
           <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] flex-1 overflow-y-auto custom-scrollbar">
-            {/* Left Column: Información General */}
-            <div className="bg-[#F8FAFC] p-4 lg:p-6 border-r border-gray-100 space-y-5">
-              <div className="p-4 bg-white rounded-xl shadow-sm border border-blue-50 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 w-16 h-16 bg-blue-50 rounded-full -mr-8 -mt-8 transition-transform group-hover:scale-110"></div>
-                <div className="relative z-10">
-                  <p className="text-[9px] text-gray-400 font-black uppercase tracking-widest mb-1.5">Usuario Seleccionado</p>
-                  <h3 className="text-lg font-bold text-gray-800 leading-tight mb-2.5">{selectedUser?.nombre}</h3>
-                  <div className="flex flex-wrap gap-1.5">
-                    <Badge className="bg-blue-500 text-white hover:bg-blue-600 border-none text-[9px] font-bold px-2 py-0">
-                      {selectedUser?.servicio}
-                    </Badge>
-                    <Badge className="bg-amber-500 text-white hover:bg-amber-600 border-none text-[9px] font-bold px-2 py-0">
-                      {selectedUser?.distrito}
-                    </Badge>
+            {/* Left Column: Datos del Usuario */}
+            <div className="bg-white p-0 border-r border-gray-100 flex flex-col">
+              <div className="p-6 border-b border-[#eeeeee]">
+                <h3 className="text-[#0099FF] text-2xl font-bold tracking-tight">Datos del usuario</h3>
+              </div>
+              
+              <div className="p-8 space-y-0">
+                {/* Identity Block */}
+                <div className="flex items-center gap-4 pb-4 border-b border-[#eeeeee]">
+                  <div className="w-14 h-14 bg-white border-2 border-[#0099FF] rounded-xl flex items-center justify-center shrink-0">
+                    <Baby className="w-10 h-10 text-[#0099FF] stroke-[1.5]" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <p className="text-sm text-gray-400 font-medium">Niña</p>
+                    <h4 className="text-lg font-bold text-[#7D3C98] leading-tight uppercase">
+                      {selectedUser?.nombre || "TAURIEL BRIANA CAJACHAGUA CHUCO"}
+                    </h4>
                   </div>
                 </div>
-              </div>
 
-              <div className="space-y-4">
-                <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-1 flex items-center gap-2">
-                  <Info className="w-3 h-3" /> Información General
-                </h4>
-                <div className="grid grid-cols-1 gap-2.5">
-                  {[
-                    { label: "DNI", value: selectedUser?.usuarioDni, icon: Shield, color: "text-blue-500" },
-                    { label: "Edad", value: selectedUser?.edad, icon: Clock, color: "text-green-500" },
-                    { label: "Fecha Ingreso", value: selectedUser?.ingreso, icon: Calendar, color: "text-purple-500" },
-                    { label: "UT / OCT", value: selectedUser?.unidadTerritorial, icon: MapPin, color: "text-red-500" },
-                    { label: "CIAI", value: selectedUser?.ciai, icon: Home, color: "text-indigo-500" },
-                    { label: "Seguro Salud", value: selectedUser?.seguroSalud, icon: Activity, color: "text-emerald-500" },
-                    { label: "Establecimiento", value: selectedUser?.establecimiento, icon: Hospital, color: "text-rose-500" },
-                  ].map((item, idx) => (
-                    <div key={idx} className="p-2.5 bg-white rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all group cursor-default">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <item.icon className={`w-3 h-3 ${item.color} opacity-70 group-hover:opacity-100 transition-opacity`} />
-                        <span className="text-[9px] font-bold text-gray-400 uppercase tracking-tight">{item.label}</span>
-                      </div>
-                      <p className="text-[13px] font-bold text-gray-700 group-hover:text-gray-900">{item.value || "No registrado"}</p>
-                    </div>
-                  ))}
-                </div>
+                {/* Data Fields */}
+                {[
+                  { label: "Edad", value: selectedUser?.edad || "26 Meses" },
+                  { label: "DNI", value: selectedUser?.usuarioDni || "93707349" },
+                  { label: "Ingreso", value: selectedUser?.ingreso || "03/03/2025" },
+                  { label: "Unidad Territorial", value: selectedUser?.unidadTerritorial || "JUNIN CT LA MERCED" },
+                  { 
+                    label: "Ciai", 
+                    value: (selectedUser?.servicio === "SCD" && (selectedUser?.ciai === "-" || !selectedUser?.ciai)) 
+                      ? "CIAI Los Girasoles de San Juan" 
+                      : (selectedUser?.ciai && selectedUser.ciai !== "-" ? selectedUser.ciai : "No disponible")
+                  },
+                  { label: "Seguro de salud", value: selectedUser?.seguroSalud || "No disponible" },
+                  { label: "Establecimiento", value: selectedUser?.establecimiento || "No disponible" },
+                ].map((item, idx) => (
+                  <div key={idx} className="py-4 border-b border-[#eeeeee] last:border-none">
+                    <p className="text-sm text-gray-400 font-medium mb-1">{item.label}</p>
+                    <p className="text-base font-bold text-[#7D3C98] leading-tight">
+                      {item.value}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -638,9 +647,10 @@ export default function App() {
                   <Badge className="bg-blue-100 text-blue-700 hover:bg-blue-100 border-none font-bold">02/10/2025</Badge>
                 </div>
                 
-                <div className="h-[350px] w-full bg-[#F8FAFC] rounded-3xl p-6 border border-gray-100 shadow-inner">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart layout="vertical" data={chartData} margin={{ top: 20, right: 30, left: 60, bottom: 20 }}>
+                <div className="h-[400px] w-full bg-[#F8FAFC] rounded-3xl p-4 sm:p-6 border border-gray-100 shadow-inner flex items-center justify-center overflow-hidden">
+                  <div className="w-[95%] max-w-[95%] h-full mx-auto flex items-center justify-center" style={{ objectFit: 'contain' }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart layout="vertical" data={chartData} margin={{ top: 20, right: 20, left: 180, bottom: 20 }}>
                       <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={true} stroke="#e2e8f0" />
                       <XAxis 
                         type="number"
@@ -651,8 +661,23 @@ export default function App() {
                       <YAxis 
                         dataKey="name" 
                         type="category"
-                        tick={{ fill: '#334155', fontSize: 10, fontWeight: 700 }}
-                        width={80}
+                        tick={(props: any) => {
+                          const { x, y, payload } = props;
+                          const [dimension, subdimension] = payload.value.split('|');
+                          return (
+                            <g transform={`translate(${x},${y})`}>
+                              <text x={-10} y={-4} dy={0} textAnchor="end" fill="#64748b" fontSize={10} fontWeight={500}>
+                                {dimension}
+                              </text>
+                              <text x={-10} y={10} dy={0} textAnchor="end" fill="#334155" fontSize={11} fontWeight={700}>
+                                {subdimension}
+                              </text>
+                            </g>
+                          );
+                        }}
+                        width={200}
+                        axisLine={false}
+                        tickLine={false}
                       />
                       <RechartsTooltip 
                         cursor={{ fill: 'rgba(0, 153, 255, 0.05)' }}
@@ -662,11 +687,14 @@ export default function App() {
                             const level = getBaremoLevel(data.value);
                             return (
                               <div className="bg-white p-3 border border-gray-100 shadow-xl rounded-lg">
-                                <p className="text-xs font-black text-gray-900 mb-1 uppercase">{data.name}</p>
-                                <p className="text-[11px] font-bold" style={{ color: getBaremoColor(data.value) }}>
-                                  Logro: {level}
-                                </p>
-                                <p className="text-[10px] text-gray-500">Puntaje Convertido: {data.value}%</p>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase mb-0.5">{data.dimension}</p>
+                                <p className="text-xs font-black text-gray-900 mb-2">{data.subdimension}</p>
+                                <div className="flex items-center justify-between gap-4">
+                                  <span className="text-[11px] font-bold" style={{ color: getBaremoColor(data.value) }}>
+                                    Logro: {level}
+                                  </span>
+                                  <span className="text-[10px] text-gray-500 font-medium">{data.value}%</span>
+                                </div>
                               </div>
                             );
                           }
@@ -682,88 +710,51 @@ export default function App() {
                       </Bar>
                     </BarChart>
                   </ResponsiveContainer>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
-                  {groupedData.map((group) => (
-                    <div key={group.dimension} className="bg-gray-50/50 rounded-2xl p-2.5 border border-gray-100 flex flex-col gap-2.5">
-                      <h5 className="text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">{group.dimension}</h5>
-                      <div className="flex flex-col gap-2 h-full">
-                        {group.items.map((item: any) => (
-                          <div key={item.name} className="p-2.5 bg-white border border-gray-100 rounded-xl shadow-sm hover:border-blue-200 transition-all flex flex-col justify-between flex-1">
-                            <div className="flex items-center justify-center gap-2 mb-2">
-                              <p className="text-[8px] font-black text-gray-900 uppercase tracking-wider text-center leading-tight">{item.name}</p>
-                              <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: getBaremoColor(item.value) }}></div>
-                            </div>
-                            <div className="space-y-0.5">
-                              <div className="flex justify-between items-center text-[9px]">
-                                <span className="text-gray-400 font-medium">Logro:</span>
-                                <span className="font-bold text-gray-700 truncate ml-1">{getBaremoLevel(item.value)}</span>
-                              </div>
-                              <div className="flex justify-between items-center text-[9px]">
-                                <span className="text-gray-400 font-medium">Puntaje:</span>
-                                <span className="font-bold text-blue-600">{item.value}%</span>
-                              </div>
-                              <div className="flex justify-between items-center text-[9px]">
-                                <span className="text-gray-400 font-medium">Baremo:</span>
-                                <span className="font-bold text-purple-600">
-                                  {item.value > 60 ? '>60' : item.value >= 50 ? '50-60' : '<50'}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-
-              {/* Recomendaciones Section */}
-              <section className="space-y-6">
-                <h4 className="font-bold text-gray-800 text-lg flex items-center gap-2.5">
-                  <div className="w-8 h-8 bg-amber-50 rounded-lg flex items-center justify-center">
-                    <Lightbulb className="w-5 h-5 text-amber-500" />
                   </div>
-                  Recomendaciones
-                </h4>
-                
-                <div className="space-y-4">
-                  {[
-                    { 
-                      title: "Estimulación Temprana", 
-                      desc: "Reforzar actividades de motora fina y lenguaje mediante juegos interactivos.",
-                      icon: Star,
-                      color: "text-amber-500",
-                      bg: "bg-amber-50"
-                    },
-                    { 
-                      title: "Seguimiento de Salud", 
-                      desc: "Programar próximo control CRED y tamizaje de hemoglobina para el siguiente mes.",
-                      icon: ClipboardCheck,
-                      color: "text-blue-500",
-                      bg: "bg-blue-50"
-                    },
-                    { 
-                      title: "Alimentación", 
-                      desc: "Continuar con dieta balanceada rica en hierro y proteínas según edad.",
-                      icon: Activity,
-                      color: "text-green-500",
-                      bg: "bg-green-50"
-                    }
-                  ].map((rec, i) => (
-                    <div key={i} className="flex gap-4 p-4 rounded-2xl border border-gray-100 bg-white hover:shadow-md transition-shadow">
-                      <div className={`w-10 h-10 ${rec.bg} ${rec.color} rounded-xl flex items-center justify-center shrink-0`}>
-                        <rec.icon className="w-5 h-5" />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                  {groupedData.map((group) => (
+                    <div key={group.dimension} className="bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col shadow-sm">
+                      <div className="bg-gray-50 py-2 px-3 border-b border-gray-100">
+                        <h5 className="text-[10px] font-black text-gray-500 uppercase tracking-wider text-center">{group.dimension}</h5>
                       </div>
-                      <div>
-                        <p className="font-bold text-gray-800 text-sm mb-1">{rec.title}</p>
-                        <p className="text-xs text-gray-500 leading-relaxed">{rec.desc}</p>
+                      <div className="p-3 flex flex-col gap-3 flex-1 bg-gray-50/30">
+                        {group.items.map((item: any, idx: number) => {
+                          const level = getBaremoLevel(item.value);
+                          const color = getBaremoColor(item.value);
+                          return (
+                            <div key={idx} className="bg-white rounded-xl p-3 border border-gray-100 shadow-sm relative overflow-hidden flex flex-col justify-between flex-1">
+                              <div className="absolute top-0 left-0 w-1 h-full" style={{ backgroundColor: color }}></div>
+                              <div className="flex justify-between items-start mb-2">
+                                <p className="text-[11px] font-bold text-gray-800 leading-tight pr-4">{item.subdimension}</p>
+                                <div className="w-2 h-2 rounded-full shrink-0 mt-0.5" style={{ backgroundColor: color }}></div>
+                              </div>
+                              <div className="space-y-1.5 mt-3">
+                                <div className="flex justify-between items-center text-[10px]">
+                                  <span className="text-gray-500 font-medium">Logro:</span>
+                                  <span className="font-bold" style={{ color }}>{level}</span>
+                                </div>
+                                <div className="flex justify-between items-center text-[10px]">
+                                  <span className="text-gray-500 font-medium">Puntaje:</span>
+                                  <span className="font-bold text-gray-700">{item.value}%</span>
+                                </div>
+                                <div className="flex justify-between items-center text-[10px]">
+                                  <span className="text-gray-500 font-medium">Baremo:</span>
+                                  <span className="font-bold text-gray-700">
+                                    {item.value > 60 ? '>60' : item.value >= 50 ? '50-60' : '<50'}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   ))}
                 </div>
               </section>
+
             </div>
           </div>
         </DialogContent>
